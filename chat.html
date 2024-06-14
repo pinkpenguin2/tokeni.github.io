@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tokeni</title>
+    <title>tokeni</title>
     <style>
         body {
             margin: 0;
@@ -32,9 +32,8 @@
             width: 100%;
             background-color: #333;
             padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px); /* Adjust based on header and input button height */
         }
 
         .chat-input {
@@ -76,10 +75,7 @@
         <h1>tokeni</h1>
     </div>
 
-    <div class="container">
-        <h2>Welcome to Tokeni Chat</h2>
-        <div id="messageContainer" class="chat-container"></div>
-    </div>
+    <div id="messageContainer" class="chat-container"></div>
 
     <div class="chat-container">
         <input type="text" class="chat-input" id="messageInput" placeholder="Type your message here">
@@ -87,22 +83,18 @@
     </div>
 
     <script>
-        document.getElementById('sendButton').addEventListener('click', function() {
-            var urlParams = new URLSearchParams(window.location.search);
-            var token = urlParams.get('token');
-            var message = document.getElementById('messageInput').value.trim();
+        // Function to get the value of a URL parameter
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
 
-            if (message !== '') {
-                var messageWithToken = token + ": " + message;
-                displayMessage(messageWithToken);
-                
-                // Clear the input field after sending
-                document.getElementById('messageInput').value = '';
-            } else {
-                alert("Message cannot be empty!");
-            }
-        });
+        // Get the token from URL parameter
+        var token = getUrlParameter('token');
 
+        // Function to display a message
         function displayMessage(message) {
             var messageContainer = document.getElementById('messageContainer');
             var messageElement = document.createElement('div');
@@ -112,11 +104,25 @@
             messageTextElement.textContent = message;
             messageElement.appendChild(messageTextElement);
             messageContainer.appendChild(messageElement);
-            
+
             // Automatically scroll to the bottom of the message container
             messageContainer.scrollTop = messageContainer.scrollHeight;
         }
+
+        // Event listener for the send button
+        document.getElementById('sendButton').addEventListener('click', function() {
+            var message = document.getElementById('messageInput').value.trim();
+
+            if (message !== '') {
+                var messageWithToken = token + ': ' + message;
+                displayMessage(messageWithToken);
+
+                // Clear the input field after sending
+                document.getElementById('messageInput').value = '';
+            } else {
+                alert('Message cannot be empty!');
+            }
+        });
     </script>
 </body>
 </html>
-
