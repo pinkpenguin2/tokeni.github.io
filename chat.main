@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tokeni</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #222; /* Dark background color */
+            color: white; /* White text color */
+            font-family: Arial, sans-serif;
+        }
+        
+        .header {
+            width: 100%;
+            background-color: #111;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            padding: 20px;
+        }
+
+        .chat-input {
+            width: calc(100% - 100px); /* Adjust based on button width */
+            padding: 10px;
+            margin-right: 10px;
+            box-sizing: border-box;
+            background-color: #222; /* Darker background color for input */
+            border: 1px solid #555; /* Darker border color */
+            color: white; /* White text color */
+            border-radius: 5px;
+        }
+
+        .send-button {
+            padding: 10px 20px;
+            background-color: #BA0000; /* Red color for button */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .send-button:hover {
+            background-color: #8B0000; /* Darken color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>tokeni</h1>
+    </div>
+
+    <div class="container">
+        <h2>Welcome to the tokeni Chat</h2>
+        <!-- Chat messages can be added here -->
+    </div>
+
+    <div class="chat-container">
+        <input type="text" class="chat-input" placeholder="Type your message here">
+        <button class="send-button">Send</button>
+    </div>
+</body>
+</html>
