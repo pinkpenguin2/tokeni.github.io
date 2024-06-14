@@ -65,13 +65,30 @@
     </div>
 
     <div class="container">
-        <h2>Welcome to the tokeni Chat</h2>
+        <h2>Welcome to Tokeni</h2>
         <!-- Chat messages can be added here -->
     </div>
 
     <div class="chat-container">
-        <input type="text" class="chat-input" placeholder="Type your message here">
-        <button class="send-button">Send</button>
+        <input type="text" class="chat-input" id="messageInput" placeholder="Type your message here">
+        <button class="send-button" onclick="sendMessage()">Send</button>
     </div>
+
+    <script>
+        function sendMessage() {
+            var token = "token:"; // Replace with your actual token
+            var message = document.getElementById('messageInput').value.trim();
+
+            if (message !== '') {
+                // Send the message along with the token
+                alert(token + " " + message);
+                
+                // Clear the input field after sending
+                document.getElementById('messageInput').value = '';
+            } else {
+                alert("Message cannot be empty!");
+            }
+        }
+    </script>
 </body>
 </html>
