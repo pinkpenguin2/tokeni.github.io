@@ -74,22 +74,19 @@
     </div>
     
     <div class="container">
-        <form id="tokenForm">
-            <input type="text" id="tokenInput" placeholder="Enter your token">
+        <form id="tokenForm" action="chat.html" method="get">
+            <input type="text" id="tokenInput" name="token" placeholder="Enter your token">
             <input type="submit" value="Submit Token">
         </form>
-        <a href="chat.html">Go to Chat</a>
     </div>
 
     <script>
         document.getElementById('tokenForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission
-            
-            // Get the entered token
-            var token = document.getElementById('tokenInput').value;
-            
-            // Save the token (for demonstration purposes, you can use local storage or send it to a server)
-            alert("Token saved: " + token);
+            var tokenInput = document.getElementById('tokenInput').value.trim();
+            if (tokenInput === '') {
+                event.preventDefault(); // Prevent form submission
+                alert("Invalid Token"); // Show alert for empty token
+            }
         });
     </script>
 </body>
