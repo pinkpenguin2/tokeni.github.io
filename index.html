@@ -3,77 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Chat</title>
-    <style>
-        /* Basic CSS for chat container and messages */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        #messages {
-            border: 1px solid #ccc;
-            height: 300px;
-            overflow-y: scroll;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        #messageForm {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #f0f0f0;
-            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-        }
-        #messageInput {
-            flex: 1;
-            margin-right: 10px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        #sendButton {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        #sendButton:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Chat App with Firebase</title>
+    <!-- Add your CSS styles here -->
 </head>
 <body>
     <div id="messages"></div>
-    
-    <form id="messageForm">
-        <input type="text" id="messageInput" placeholder="Type your message...">
-        <button type="button" id="sendButton">Send</button>
-    </form>
+    <input type="text" id="messageInput" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
 
-    <script>
-        // Function to send a message
+    <!-- Import Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-d5tDYuk5Nr-KAkt8lKUDRoeXM6Z3qE4",
+            authDomain: "tokeni-penguin.firebaseapp.com",
+            projectId: "tokeni-penguin",
+            databaseURL: "https://tokeni-penguin-default-rtdb.firebaseio.com", // Add this if using Realtime Database
+            storageBucket: "tokeni-penguin.appspot.com",
+            messagingSenderId: "29815101882",
+            appId: "1:29815101882:web:7071a0e98c25ad2d372583",
+            measurementId: "G-2KE3XE3WLP"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
         function sendMessage() {
             const messageInput = document.getElementById('messageInput');
             const message = messageInput.value.trim();
 
             if (message !== '') {
                 const userId = generateUserId();
-                displayMessage(userId, message);
                 saveMessage(userId, message);
                 messageInput.value = '';
             }
         }
 
-        // Function to display a message
+        function saveMessage(userId, message) {
+            push(ref(db, 'messages'), {
+                userId: userId,
+                message: message
+            });
+        }
+
         function displayMessage(userId, message) {
             const messageContainer = document.getElementById('messages');
             const messageElement = document.createElement('div');
@@ -83,31 +59,18 @@
             messageContainer.scrollTop = messageContainer.scrollHeight;
         }
 
-        // Function to save a message in localStorage
-        function saveMessage(userId, message) {
-            const messages = JSON.parse(localStorage.getItem('messages')) || [];
-            messages.push({ userId, message });
-            localStorage.setItem('messages', JSON.stringify(messages));
-        }
-
-        // Function to generate a random user ID
         function generateUserId() {
             return 'user_' + Math.random().toString(36).substr(2, 9);
         }
 
-        // Function to load messages from localStorage
-        function loadMessages() {
-            const messages = JSON.parse(localStorage.getItem('messages')) || [];
-            messages.forEach(message => {
+        // Listen for new messages in real-time
+        onValue(ref(db, 'messages'), snapshot => {
+            const messages = snapshot.val();
+            for (let messageId in messages) {
+                const message = messages[messageId];
                 displayMessage(message.userId, message.message);
-            });
-        }
-
-        // Event listener for sending messages
-        document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-        // Load messages when the page is loaded
-        document.addEventListener('DOMContentLoaded', loadMessages);
+            }
+        });
     </script>
 </body>
 </html>
