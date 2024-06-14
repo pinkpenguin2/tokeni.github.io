@@ -1,17 +1,16 @@
-function sendMessage() {
-    var messageInput = document.getElementById('message-input');
-    var message = messageInput.value.trim();
+ffunction handleLogin(event) {
+    event.preventDefault();
     
-    if (message !== '') {
-        displayMessage(message);
-        messageInput.value = '';
-    }
-}
+    var tokenInput = document.getElementById('token-input').value.trim();
+    
+    // Check if token is valid (for simplicity, let's assume any non-empty token is valid)
+    if (tokenInput !== '') {
+        // Store token in temporary cookie (expires when browser is closed)
+        document.cookie = `token=${tokenInput}; path=/`;
 
-function displayMessage(message) {
-    var chatMessages = document.getElementById('chat-messages');
-    var messageElement = document.createElement('div');
-    messageElement.classList.add('message');
-    messageElement.textContent = message;
-    chatMessages.appendChild(messageElement);
+        // Redirect to index.html (or your chat page)
+        window.location.href = 'index.html';
+    } else {
+        alert('Please enter a valid token.');
+    }
 }
