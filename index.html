@@ -5,64 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Chat</title>
     <style>
-        /* CSS styles for chat interface */
+        /* Basic CSS for chat container and messages */
+        #messages {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            max-height: 300px;
+            overflow-y: scroll;
+        }
     </style>
 </head>
 <body>
-    <div id="messages">
-        <!-- Message container -->
-    </div>
+    <div id="messages"></div>
     <input type="text" id="messageInput" placeholder="Type your message...">
     <button onclick="sendMessage()">Send</button>
 
     <script>
-        // Function to generate temporary user ID
-        function generateUserId() {
-            return 'user_' + Math.random().toString(36).substr(2, 9);
-        }
-
-        // Function to retrieve or generate user ID and store in localStorage
-        function getUserId() {
-            let userId = localStorage.getItem('userId');
-            if (!userId) {
-                userId = generateUserId();
-                localStorage.setItem('userId', userId);
-            }
-            return userId;
-        }
-
-        // Function to send message
         function sendMessage() {
             const messageInput = document.getElementById('messageInput');
             const message = messageInput.value.trim();
+
             if (message !== '') {
-                const userId = getUserId();
-                const timestamp = new Date().toLocaleTimeString(); // Include timestamp if needed
-
-                // Display message locally
-                displayMessage(userId, message, timestamp);
-
-                // Optionally store message in localStorage for persistence
-                // Example: localStorage.setItem('message_' + timestamp, JSON.stringify({ userId, message }));
-
+                displayMessage(message);
                 messageInput.value = '';
+
+                // Store message in localStorage
+                const messages = JSON.parse(localStorage.getItem('messages')) || [];
+                messages.push(message);
+                localStorage.setItem('messages', JSON.stringify(messages));
             }
         }
 
-        // Function to display message in the chat interface
-        function displayMessage(userId, message, timestamp) {
+        function displayMessage(message) {
             const messageContainer = document.getElementById('messages');
             const messageElement = document.createElement('div');
-            messageElement.textContent = `${timestamp} - ${userId}: ${message}`;
+            messageElement.textContent = message;
             messageContainer.appendChild(messageElement);
         }
 
-        // Initial setup: Retrieve previous messages if needed from localStorage
-        // Example: Load messages from localStorage and display them initially
+        // Function to load messages from localStorage on page load
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.forEach(message => {
+                displayMessage(message);
+            });
+        }
 
-        // Optional: Simulate receiving messages from others
-        // Example: Use setTimeout or setInterval to simulate messages from other users
+        // Load messages when the page is ready
+        document.addEventListener('DOMContentLoaded', loadMessages);
 
+        // Optional: Clear localStorage (for testing purposes)
+        // localStorage.removeItem('messages');
     </script>
 </body>
 </html>
+
