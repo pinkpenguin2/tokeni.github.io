@@ -13,12 +13,28 @@
             max-height: 300px;
             overflow-y: scroll;
         }
+
+        /* CSS for message input and submit button */
+        #messageForm {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        #messageInput {
+            flex: 1;
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
     <div id="messages"></div>
-    <input type="text" id="messageInput" placeholder="Type your message...">
-    <button onclick="sendMessage()">Send</button>
+    
+    <form id="messageForm">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button type="button" onclick="sendMessage()">Send</button>
+    </form>
 
     <script>
         function sendMessage() {
@@ -26,37 +42,47 @@
             const message = messageInput.value.trim();
 
             if (message !== '') {
-                displayMessage(message);
+                const userId = getUserId();
+                displayMessage(userId, message);
                 messageInput.value = '';
 
-                // Store message in localStorage
+                // Store message with user ID in localStorage
                 const messages = JSON.parse(localStorage.getItem('messages')) || [];
-                messages.push(message);
+                messages.push({ userId, message });
                 localStorage.setItem('messages', JSON.stringify(messages));
             }
         }
 
-        function displayMessage(message) {
+        function displayMessage(userId, message) {
             const messageContainer = document.getElementById('messages');
             const messageElement = document.createElement('div');
-            messageElement.textContent = message;
+            messageElement.textContent = `${userId}: ${message}`;
             messageContainer.appendChild(messageElement);
         }
 
-        // Function to load messages from localStorage on page load
+        function getUserId() {
+            let userId = localStorage.getItem('userId');
+            if (!userId) {
+                userId = generateUserId();
+                localStorage.setItem('userId', userId);
+            }
+            return userId;
+        }
+
+        function generateUserId() {
+            return 'user_' + Math.random().toString(36).substr(2, 9);
+        }
+
         function loadMessages() {
             const messages = JSON.parse(localStorage.getItem('messages')) || [];
             messages.forEach(message => {
-                displayMessage(message);
+                displayMessage(message.userId, message.message);
             });
         }
 
-        // Load messages when the page is ready
         document.addEventListener('DOMContentLoaded', loadMessages);
-
-        // Optional: Clear localStorage (for testing purposes)
-        // localStorage.removeItem('messages');
     </script>
 </body>
 </html>
+
 
