@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tokeni</title>
+    <title>tokeni</title>
     <style>
         body {
             margin: 0;
@@ -66,8 +65,8 @@
     </div>
 
     <div class="container">
-        <h2>Welcome to Tokeni Chat</h2>
-        <!-- Chat messages can be added here -->
+        <h2>Welcome to tokeni Chat</h2>
+        <div id="messageContainer"></div>
     </div>
 
     <div class="chat-container">
@@ -81,8 +80,8 @@
             var message = document.getElementById('messageInput').value.trim();
 
             if (message !== '') {
-                // Send the message along with the token
-                alert(token + " " + message);
+                var messageWithToken = token + " " + message;
+                displayMessage(messageWithToken);
                 
                 // Clear the input field after sending
                 document.getElementById('messageInput').value = '';
@@ -90,6 +89,13 @@
                 alert("Message cannot be empty!");
             }
         });
+
+        function displayMessage(message) {
+            var messageContainer = document.getElementById('messageContainer');
+            var messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageContainer.appendChild(messageElement);
+        }
     </script>
 </body>
 </html>
