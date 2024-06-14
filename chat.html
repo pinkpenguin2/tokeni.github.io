@@ -32,6 +32,8 @@
             width: 100%;
             background-color: #333;
             padding: 20px;
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 70vh; /* Limit maximum height */
         }
 
         .chat-input {
@@ -65,8 +67,8 @@
     </div>
 
     <div class="container">
-        <h2>Welcome to tokeni Chat</h2>
-        <div id="messageContainer"></div>
+        <h2>Welcome to the tokeni Chat</h2>
+        <div id="messageContainer" class="chat-container"></div>
     </div>
 
     <div class="chat-container">
@@ -95,6 +97,9 @@
             var messageElement = document.createElement('div');
             messageElement.textContent = message;
             messageContainer.appendChild(messageElement);
+            
+            // Automatically scroll to the bottom of the message container
+            messageContainer.scrollTop = messageContainer.scrollHeight;
         }
     </script>
 </body>
