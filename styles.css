@@ -5,16 +5,29 @@ body {
     padding: 20px;
 }
 
-.login-container, .chat-container {
-    max-width: 600px;
-    margin: 0 auto;
+.chat-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.user {
+    max-width: 400px;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-#message-input {
+.chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+input[type="text"] {
     width: calc(100% - 70px);
     padding: 8px;
     margin-right: 10px;
@@ -29,14 +42,6 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
-
-.chat-messages {
-    max-height: 300px;
-    overflow-y: auto;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
 }
 
 .message {
