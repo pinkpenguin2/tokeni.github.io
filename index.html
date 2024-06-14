@@ -25,11 +25,43 @@
         h1 {
             font-weight: bold;
         }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>tokeni</h1>
+        <form id="tokenForm">
+            <input type="text" id="tokenInput" placeholder="Enter your token">
+            <input type="submit" value="Submit Token">
+        </form>
     </div>
+
+    <script>
+        document.getElementById('tokenForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            // Get the entered token
+            var token = document.getElementById('tokenInput').value;
+            
+            // Save the token (for demonstration purposes, you can use local storage or send it to a server)
+            alert("Token saved: " + token);
+        });
+    </script>
 </body>
 </html>
