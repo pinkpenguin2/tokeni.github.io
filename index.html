@@ -3,30 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tokeni</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Simple Chat</title>
+    <style>
+        /* CSS styles for chat interface */
+    </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="user">
-            <h3>User A</h3>
-            <div class="chat-messages" id="chat-messages-a">
-                <!-- Messages for User A will be appended here -->
-            </div>
-            <input type="text" id="message-input-a" placeholder="Type your message...">
-            <button onclick="sendMessage('a')">Send</button>
-        </div>
-
-        <div class="user">
-            <h3>User B</h3>
-            <div class="chat-messages" id="chat-messages-b">
-                <!-- Messages for User B will be appended here -->
-            </div>
-            <input type="text" id="message-input-b" placeholder="Type your message...">
-            <button onclick="sendMessage('b')">Send</button>
-        </div>
+    <div id="messages">
+        <!-- Message container -->
     </div>
+    <input type="text" id="messageInput" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
 
-    <script src="script.js"></script>
+    <script>
+        const userId = generateUserId(); // Function to generate temporary user ID
+
+        function generateUserId() {
+            // Generate a temporary user ID (could be from cookies or local storage)
+            return 'user_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+
+            if (message !== '') {
+                displayMessage(userId, message);
+                messageInput.value = '';
+
+                // Store message in local storage or temporary data structure
+                // Example: localStorage.setItem('message_' + timestamp, JSON.stringify({ userId, message }));
+            }
+        }
+
+        function displayMessage(userId, message) {
+            const messageContainer = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${userId}: ${message}`;
+            messageContainer.appendChild(messageElement);
+        }
+
+        // Function to periodically check for new messages or use real-time communication techniques
+        // Example using setInterval:
+        // setInterval(checkForNewMessages, 3000);
+
+        // Example function to check for new messages
+        // function checkForNewMessages() {
+        //     // Retrieve messages from storage or implement real-time messaging
+        // }
+
+        // Initial setup: Retrieve previous messages, if any
+        // checkForNewMessages();
+    </script>
 </body>
 </html>
