@@ -8,27 +8,25 @@
 </head>
 <body>
     <div class="chat-container">
-        <div class="chat-messages" id="chat-messages">
-            <!-- Messages will be appended here -->
+        <div class="user">
+            <h3>User A</h3>
+            <div class="chat-messages" id="chat-messages-a">
+                <!-- Messages for User A will be appended here -->
+            </div>
+            <input type="text" id="message-input-a" placeholder="Type your message...">
+            <button onclick="sendMessage('a')">Send</button>
         </div>
-        <input type="text" id="message-input" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
+
+        <div class="user">
+            <h3>User B</h3>
+            <div class="chat-messages" id="chat-messages-b">
+                <!-- Messages for User B will be appended here -->
+            </div>
+            <input type="text" id="message-input-b" placeholder="Type your message...">
+            <button onclick="sendMessage('b')">Send</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Check if token exists in cookie
-        var token = getCookie('token');
-        if (!token) {
-            // Redirect to login page if token is not present
-            window.location.href = 'login.html';
-        }
-
-        // Function to get cookie value by name
-        function getCookie(name) {
-            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-            if (match) return match[2];
-        }
-    </script>
 </body>
 </html>
