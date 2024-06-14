@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Chat Interface</title>
+    <title>Chat Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="chat-container">
-        <div class="chat-messages" id="chat-messages">
-            <!-- Messages will be appended here -->
-        </div>
-        <input type="text" id="message-input" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
+        <h2>Welcome to the Chat</h2>
+        <!-- Your chat interface HTML -->
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Check if token exists in cookie
+        var token = getCookie('token');
+        if (!token) {
+            // Redirect to login page if token is not present
+            window.location.href = 'login.html';
+        }
+
+        // Function to get cookie value by name
+        function getCookie(name) {
+            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            if (match) return match[2];
+        }
+    </script>
 </body>
 </html>
