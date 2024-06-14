@@ -16,44 +16,53 @@
     <button onclick="sendMessage()">Send</button>
 
     <script>
-        const userId = generateUserId(); // Function to generate temporary user ID
-
+        // Function to generate temporary user ID
         function generateUserId() {
-            // Generate a temporary user ID (could be from cookies or local storage)
             return 'user_' + Math.random().toString(36).substr(2, 9);
         }
 
+        // Function to retrieve or generate user ID and store in localStorage
+        function getUserId() {
+            let userId = localStorage.getItem('userId');
+            if (!userId) {
+                userId = generateUserId();
+                localStorage.setItem('userId', userId);
+            }
+            return userId;
+        }
+
+        // Function to send message
         function sendMessage() {
             const messageInput = document.getElementById('messageInput');
             const message = messageInput.value.trim();
-
             if (message !== '') {
-                displayMessage(userId, message);
-                messageInput.value = '';
+                const userId = getUserId();
+                const timestamp = new Date().toLocaleTimeString(); // Include timestamp if needed
 
-                // Store message in local storage or temporary data structure
+                // Display message locally
+                displayMessage(userId, message, timestamp);
+
+                // Optionally store message in localStorage for persistence
                 // Example: localStorage.setItem('message_' + timestamp, JSON.stringify({ userId, message }));
+
+                messageInput.value = '';
             }
         }
 
-        function displayMessage(userId, message) {
+        // Function to display message in the chat interface
+        function displayMessage(userId, message, timestamp) {
             const messageContainer = document.getElementById('messages');
             const messageElement = document.createElement('div');
-            messageElement.textContent = `${userId}: ${message}`;
+            messageElement.textContent = `${timestamp} - ${userId}: ${message}`;
             messageContainer.appendChild(messageElement);
         }
 
-        // Function to periodically check for new messages or use real-time communication techniques
-        // Example using setInterval:
-        // setInterval(checkForNewMessages, 3000);
+        // Initial setup: Retrieve previous messages if needed from localStorage
+        // Example: Load messages from localStorage and display them initially
 
-        // Example function to check for new messages
-        // function checkForNewMessages() {
-        //     // Retrieve messages from storage or implement real-time messaging
-        // }
+        // Optional: Simulate receiving messages from others
+        // Example: Use setTimeout or setInterval to simulate messages from other users
 
-        // Initial setup: Retrieve previous messages, if any
-        // checkForNewMessages();
     </script>
 </body>
 </html>
