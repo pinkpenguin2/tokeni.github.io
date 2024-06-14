@@ -1,4 +1,4 @@
-ffunction handleLogin(event) {
+function handleLogin(event) {
     event.preventDefault();
     
     var tokenInput = document.getElementById('token-input').value.trim();
