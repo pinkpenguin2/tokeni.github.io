@@ -2,10 +2,21 @@
 function sendMessage() {
     var messageInput = document.getElementById('message-input');
     var message = messageInput.value.trim();
-    
-    if (message !== '') {
-        displayMessage(message);
+
+    // Get token from cookie
+    var token = getCookie('token');
+
+    if (message !== '' && token) {
+        // Format message with token
+        var formattedMessage = `${token}: ${message}`;
+        
+        // Display message in the chat
+        displayMessage(formattedMessage);
+        
+        // Clear message input
         messageInput.value = '';
+    } else {
+        alert('Please enter a message.');
     }
 }
 
