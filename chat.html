@@ -65,17 +65,17 @@
     </div>
 
     <div class="container">
-        <h2>Welcome to Tokeni</h2>
+        <h2>Welcome to the Tokeni Chat</h2>
         <!-- Chat messages can be added here -->
     </div>
 
     <div class="chat-container">
         <input type="text" class="chat-input" id="messageInput" placeholder="Type your message here">
-        <button class="send-button" onclick="sendMessage()">Send</button>
+        <button class="send-button" id="sendButton">Send</button>
     </div>
 
     <script>
-        function sendMessage() {
+        document.getElementById('sendButton').addEventListener('click', function() {
             var token = "token:"; // Replace with your actual token
             var message = document.getElementById('messageInput').value.trim();
 
@@ -88,7 +88,8 @@
             } else {
                 alert("Message cannot be empty!");
             }
-        }
+        });
     </script>
 </body>
 </html>
+
